@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You ❤️</title>
+    <style>
+        :root {
+            --bg-color: #fbf9f6;
+            --primary-color: #d4af37;
+            --accent-color: #8c764b;
+            --text-color: #332f2b;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 550px;
+            width: 90%;
+            margin: 50px auto;
+        }
+
+        /* Card Styling */
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 35px;
+            box-shadow: 0 4px 20px rgba(140, 118, 75, 0.05);
+            margin-bottom: 25px;
+            border: 1px solid #f0eae1;
+        }
+
+        h1, h2 {
+            color: var(--accent-color);
+            text-align: center;
+            font-weight: 500;
+            letter-spacing: -0.5px;
+        }
+
+        p {
+            line-height: 1.6;
+            font-size: 1.05rem;
+            text-align: center;
+            color: #5c554e;
+        }
+
+        /* Routine Checklist */
+        .routine-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .routine-item {
+            display: flex;
+            align-items: center;
+            background: #faf8f5;
+            padding: 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            border: 1px solid #f5f0e6;
+            transition: all 0.2s ease;
+        }
+
+        .routine-item:hover {
+            border-color: var(--primary-color);
+            background: #fdfcfb;
+        }
+
+        .routine-item input {
+            margin-right: 15px;
+            transform: scale(1.2);
+            accent-color: var(--accent-color);
+        }
+
+        /* Form / Text Area */
+        textarea {
+            width: 100%;
+            height: 130px;
+            border: 1px solid #e6dec9;
+            border-radius: 10px;
+            padding: 14px;
+            box-sizing: border-box;
+            resize: none;
+            font-family: inherit;
+            font-size: 1rem;
+            background-color: #fdfdfd;
+            color: var(--text-color);
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(140, 118, 75, 0.1);
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            letter-spacing: 0.5px;
+            transition: background 0.2s ease;
+        }
+
+        button:hover {
+            background: #73603d;
+        }
+
+        .heart {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 10px;
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- SECTION 1: Apology -->
+        <div class="card">
+            <div class="heart">✨</div>
+            <h1>I'm So Sorry...</h1>
+            <p>Hey, I hate when things aren't right between us. I built this quiet little space just for you because your peace of mind matters more to me than anything. Take your time, but please let me know how you're holding up today.</p>
+        </div>
+
+        <!-- SECTION 2: Daily Routine Check-in -->
+        <div class="card">
+            <h2>Your Routine Check-in ✔️</h2>
+            <p>Did you take care of yourself today? (Be honest with me!)</p>
+            <div class="routine-group">
+                <label class="routine-item">
+                    <input type="checkbox" id="eat"> <span>Had your meals on time? 🍳</span>
+                </label>
+                <label class="routine-item">
+                    <input type="checkbox" id="water"> <span>Drank enough water today? 💧</span>
+                </label>
+                <label class="routine-item">
+                    <input type="checkbox" id="sleep"> <span>Got some good rest / sleep? ⏰</span>
+                </label>
+                <label class="routine-item">
+                    <input type="checkbox" id="break"> <span>Took a breather from your stress? ☕</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- SECTION 3: Vent/Problems Box -->
+        <div class="card">
+            <h2>Tell Me Everything 💬</h2>
+            <p>Is something bothering you? Did anyone annoy you? Vent it all out here, I'm completely listening.</p>
+            
+            <!-- Live Formspree integration -->
+            <form action="https://formspree.io/f/mdavpdqq" method="POST" id="ventForm">
+                <input type="hidden" id="hiddenRoutine" name="Routine Status" value="">
+                <textarea name="Vent Box" placeholder="Type whatever is on your mind..."></textarea>
+                <button type="submit" onclick="compileData()">Send It To Me</button>
+            </form>
+        </div>
+
+    </div>
+
+    <script>
+        function compileData() {
+            // Collect the routine data to bundle it with the text submission
+            const eat = document.getElementById('eat').checked ? "Yes" : "No";
+            const water = document.getElementById('water').checked ? "Yes" : "No";
+            const sleep = document.getElementById('sleep').checked ? "Yes" : "No";
+            const breakTime = document.getElementById('break').checked ? "Yes" : "No";
+
+            const summary = `Ate: ${eat}, Water: ${water}, Sleep: ${sleep}, Took Break: ${breakTime}`;
+            document.getElementById('hiddenRoutine').value = summary;
+        }
+    </script>
+
+</body>
+</html>
